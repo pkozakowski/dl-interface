@@ -1,0 +1,57 @@
+name:                dl-interface
+version:             0.1.0.0
+github:              "pkozakowski/dl-interface"
+license:             BSD3
+author:              "Piotr Kozakowski"
+maintainer:          "pkozakowski@duck.com"
+copyright:           "2022 Piotr Kozakowski"
+
+extra-source-files:
+- README.md
+- ChangeLog.md
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            Web
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description:         Please see the README on GitHub at <https://github.com/pkozakoski/dl-interface#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+- filepath
+- polysemy
+
+library:
+  source-dirs: src
+
+executables:
+  dl-interface-exe:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - dl-interface
+
+tests:
+  dl-interface-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - dl-interface
+
+default-extensions:
+- DataKinds
+- FunctionalDependencies
+- MultiParamTypeClasses
+- QuantifiedConstraints
+- TypeFamilies
