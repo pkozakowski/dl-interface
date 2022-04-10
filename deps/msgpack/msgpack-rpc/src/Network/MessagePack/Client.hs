@@ -61,8 +61,8 @@ newtype Client a
 -- | RPC connection type
 data Connection
   = Connection
-    !(ResumableSource IO S.ByteString)
-    !(Sink S.ByteString IO ())
+    !(SealedConduitT () S.ByteString IO ())
+    !(ConduitT S.ByteString Void IO ())
     !Int
 
 execClient :: S.ByteString -> Int -> Client a -> IO ()

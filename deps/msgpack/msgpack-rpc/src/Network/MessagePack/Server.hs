@@ -44,6 +44,7 @@ module Network.MessagePack.Server (
 import           Control.Applicative
 import           Control.Monad
 import           Control.Monad.Catch
+import           Control.Monad.IO.Unlift
 import           Control.Monad.Trans
 import           Control.Monad.Trans.Control
 import           Data.Binary
@@ -101,7 +102,7 @@ method :: MethodType m f
 method name body = Method name $ toBody body
 
 -- | Start RPC server with a set of RPC methods.
-serve :: (MonadBaseControl IO m, MonadIO m, MonadCatch m, MonadThrow m)
+serve :: (MonadBaseControl IO m, MonadUnliftIO m, MonadCatch m, MonadThrow m)
          => Int        -- ^ Port number
          -> [Method m] -- ^ list of methods
          -> m ()
@@ -116,7 +117,7 @@ serve port methods = runGeneralTCPServer (serverSettings port "*") $ \ad -> do
         case fromObject obj of
           Error e     -> throwM $ ServerError e
           Success req -> lift $ getResponse (req :: Request)
-      _ <- CB.sourceLbs (pack res) $$ sink
+      _ <- CB.sourceLbs (pack res) `connect` sink
       processRequests rsrc' sink
 
     getResponse (rtype, msgid, methodName, args) = do
