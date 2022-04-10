@@ -65,11 +65,11 @@ data Connection
     !(ConduitT S.ByteString Void IO ())
     !Int
 
-execClient :: S.ByteString -> Int -> Client a -> IO ()
+execClient :: S.ByteString -> Int -> Client a -> IO a
 execClient host port m =
   runTCPClient (clientSettings port host) $ \ad -> do
     (rsrc, _) <- appSource ad $$+ return ()
-    void $ evalStateT (runClient m) (Connection rsrc (appSink ad) 0)
+    evalStateT (runClient m) (Connection rsrc (appSink ad) 0)
 
 -- | RPC error type
 data RpcError
