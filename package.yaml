@@ -21,8 +21,13 @@ description:         Please see the README on GitHub at <https://github.com/pkoz
 
 dependencies:
 - base >= 4.7 && < 5
-- filepath
+- deepseq
+- msgpack
+- msgpack-rpc
 - polysemy
+- port-utils
+- process
+- monad-validate
 
 library:
   source-dirs: src
@@ -50,8 +55,17 @@ tests:
     - dl-interface
 
 default-extensions:
+- BlockArguments
 - DataKinds
+- FlexibleContexts
 - FunctionalDependencies
+- GADTs
+- LambdaCase
 - MultiParamTypeClasses
+- OverloadedStrings
 - QuantifiedConstraints
+- RecordWildCards
+- ScopedTypeVariables
+- TemplateHaskell
 - TypeFamilies
+- TypeOperators

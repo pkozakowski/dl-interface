@@ -3,7 +3,7 @@ module Learning.Deep.Network where
 import Control.Arrow
 import Data.Bicontravariant
 import Polysemy
-import System.FilePath
+import System.IO
 
 class (forall o. Bicontravariant (n o)) => Trainer n where
 
